@@ -1,249 +1,136 @@
-# <img width="35" height="35" alt="Untitled design (4)" src="https://github.com/user-attachments/assets/4f8b03c7-01a7-4845-abf4-3feb5c08f4cc" />ZetaGuardian
+# SomniaGuardian
 
-<div align="center">
-  <video width="800" height="450" autoplay loop muted style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-    <source src="https://raw.githubusercontent.com/ombaviskar18/ZetaGaurdian/main/hello/public/logos/heroivideo.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  
-  **DeFi Security & Analysis Platform**
-  
-  *Real-time contract analysis, social sentiment tracking, and automated monitoring for DeFi investors*
-  
-  [![ZetaChain](https://img.shields.io/badge/Built%20on-ZetaChain-purple)](https://Zetachain.com)
-  [![React](https://img.shields.io/badge/Frontend-React-blue)](https://reactjs.org)
-  [![Vercel](https://img.shields.io/badge/Deployed-Vercel-black)](https://vercel.com)
-  [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-</div>
+Universal blockchain security analysis platform powered by Somnia network.
 
-## 🚀 Features
+## Features
 
-| Feature | Description |
-|---------|-------------|
-| 🔍 **Contract Analysis** | Smart contract security audit, risk assessment, ABI analysis with AI insights |
-| 📊 **Social Analysis** | Real-time news integration, sentiment analysis, SWOT analysis, Telegram bot alerts |
-| 📈 **Tokenomics Analysis** | Market data, supply analysis, whale tracking, portfolio analysis |
-| ⚡ **Real-time Monitoring** | Live token tracking, price alerts, AI predictions, interactive charts |
-| 🎨 **Modern UI/UX** | Responsive design, print reports, mobile optimized, real-time updates |
+- **Contract Analysis**: Comprehensive security evaluation of smart contracts
+- **Social Analysis**: AI-powered social sentiment analysis for crypto projects
+- **Tokenomics Analysis**: Deep dive into token economics and distribution
+- **Cross-Chain Monitoring**: Monitor transactions across multiple blockchains
+- **SST Token Integration**: Features gated by holding 1 SST token
 
-## 🏗️ Architecture
+## Tech Stack
 
-```mermaid
-graph TB
-    subgraph "Frontend (React + Vite)"
-        A[User Interface] --> B[Contract Analysis]
-        A --> C[Social Analysis]
-        A --> D[Tokenomics Analysis]
-        A --> E[Real-time Monitoring]
-    end
-    
-    subgraph "Backend (Vercel Functions)"
-        F[API Gateway] --> G[Contract Inspector]
-        F --> H[Social Insights]
-        F --> I[Token Data]
-        F --> J[Health Check]
-    end
-    
-    subgraph "External APIs"
-        K[Etherscan] --> G
-        L[CoinGecko] --> I
-        M[Google News] --> H
-        N[Gemini AI] --> H
-    end
-    
-    subgraph "Blockchain"
-        O[Ethereum] --> G
-        P[Base] --> G
-        Q[Polygon] --> G
-        R[BSC] --> G
-        S[Avalanche] --> G
-    end
-    
-    subgraph "Smart Contracts (ZetaChain)"
-        T[ContractAnalysis.sol]
-        U[SocialAnalysis.sol]
-        V[Tokenomics.sol]
-        W[Monitoring.sol]
-    end
-    
-    B --> F
-    C --> F
-    D --> F
-    E --> F
-```
+- **Frontend**: React + TypeScript + Vite
+- **Backend**: Node.js + Express
+- **Blockchain**: Somnia Testnet (Shannon)
+- **Smart Contracts**: Solidity + Hardhat
+- **Deployment**: Vercel
 
-## 🛠️ Tech Stack
+## Network Configuration
 
-| Layer | Technology |
-|-------|------------|
-| **Frontend** | React 19, TypeScript, Vite, Framer Motion, Chart.js |
-| **Backend** | Node.js, Express.js, Vercel Functions, Axios |
-| **Blockchain** | ZetaChain, Solidity, Hardhat, Ethers.js |
-| **APIs** | Google News, CoinGecko, Gemini AI, Telegram Bot |
-| **Deployment** | Vercel, GitHub Actions |
+- **Network Name**: Somnia Testnet (Shannon)
+- **Chain ID**: 50312
+- **RPC URL**: https://dream-rpc.somnia.network/
+- **Currency Symbol**: STT
+- **Block Explorer**: https://somnia-testnet.socialscan.io/
 
-## 🚀 Quick Start
+## Getting Started
 
-### **Prerequisites**
+### Prerequisites
+
 - Node.js 18+
+- npm or yarn
 - MetaMask wallet
-- API keys (see [Setup Guide](VERCEL_ENV_SETUP.md))
 
-### **Installation**
+### Installation
+
+1. Clone the repository:
 ```bash
-# Clone & install
 git clone <repository-url>
-cd hello
-npm install
-cd frontend && npm install
-cd ../api && npm install
-
-# Start development
-npm run dev --prefix frontend  # Frontend
-npm run server                 # Backend
+cd SomniaGuardian/ZetaGaurdian
 ```
 
-### **Live Demo**
-🌐 **[https://Zeta-gaurdian.vercel.app](https://Zeta-gaurdian.vercel.app)**
-
-## 🌐 Deployment
-
-### **Vercel Deployment**
+2. Install dependencies:
 ```bash
-# Deploy to production
-vercel --prod
-
-# Deploy to preview
-vercel
+npm install
 ```
 
-### **Environment Setup**
-⚠️ **Required**: Configure environment variables in Vercel dashboard
-- See [Setup Guide](VERCEL_ENV_SETUP.md) for detailed instructions
-- Run `node test-api.js` to verify API functionality
-
-### **Deployment Workflow**
-
-```mermaid
-graph LR
-    A[Code Push] --> B[GitHub]
-    B --> C[Vercel Build]
-    C --> D[Frontend Build]
-    C --> E[API Functions]
-    D --> F[Static Assets]
-    E --> G[Serverless Functions]
-    F --> H[CDN]
-    G --> I[Edge Network]
-    H --> J[Live Site]
-    I --> J
+3. Set up environment variables:
+```bash
+cp env.example .env
+# Edit .env with your actual values
 ```
 
-### **Smart Contracts**
+4. Deploy SST token to Somnia:
 ```bash
 npx hardhat compile
-npx hardhat deploy --network Zeta
+ts-node ./scripts/deploy-sst.ts
 ```
 
-## 📱 Usage
+5. Update contract addresses:
+- Copy the deployed SST address to `frontend/src/constants/contracts.ts`
+- Update `contract-addresses.json` with the new address
 
-### **User Workflow**
-
-```mermaid
-graph TD
-    A[User Input] --> B{Analysis Type}
-    B -->|Contract| C[Contract Analysis]
-    B -->|Social| D[Social Analysis]
-    B -->|Tokenomics| E[Tokenomics Analysis]
-    B -->|Monitoring| F[Real-time Monitoring]
-    
-    C --> G[Security Score]
-    D --> H[Sentiment Analysis]
-    E --> I[Market Data]
-    F --> J[Live Metrics]
-    
-    G --> K[AI Insights]
-    H --> K
-    I --> K
-    J --> K
-    
-    K --> L[Download Report]
-    K --> M[Share Results]
+6. Start development server:
+```bash
+npm run dev:all
 ```
 
-### **Quick Actions**
-- 🔍 **Contract Analysis**: Enter address → Get security score
-- 📊 **Social Analysis**: Enter symbol → View sentiment & news
-- 📈 **Tokenomics**: Enter token → Analyze supply & metrics
-- ⚡ **Monitoring**: Enter token → Track live data
+## Deployment
 
-## 🔧 Configuration
+### Vercel Deployment
 
-### **API Keys Required**
-| Service | Setup Link | Purpose |
-|---------|------------|---------|
-| **Google News** | [Cloud Console](https://console.cloud.google.com) | News aggregation |
-| **CoinGecko** | [CoinGecko API](https://www.coingecko.com/en/api) | Market data |
-| **Gemini AI** | [AI Studio](https://makersuite.google.com/app/apikey) | AI insights |
-| **Telegram Bot** | [@BotFather](https://t.me/botfather) | Automated alerts |
+1. Connect your repository to Vercel
+2. Set up environment variables in Vercel dashboard (see `VERCEL_ENV_SETUP.md`)
+3. Deploy:
+```bash
+npm run deploy
+```
 
-### **API Endpoints**
+### Environment Variables
+
+Required environment variables for full functionality:
+
+- `SOMNIA_RPC_URL`: Somnia network RPC endpoint
+- `PRIVATE_KEY`: Wallet private key for deployments
+- `GEMINI_API_KEY`: Google Gemini API key for AI features
+- `GOOGLE_NEWS_API_KEY`: News API key for social analysis
+- Various blockchain API keys (see `VERCEL_ENV_SETUP.md`)
+
+## Smart Contracts
+
+### SST Token
+
+ERC-20 token contract deployed on Somnia Testnet:
+- **Name**: Somnia Service Token
+- **Symbol**: SST
+- **Purpose**: Gate features requiring 1 SST token
+
+### Deployment
+
+```bash
+# Compile contracts
+npx hardhat compile
+
+# Deploy SST token
+ts-node ./scripts/deploy-sst.ts
+
+# Deploy other contracts
+npx hardhat deploy --network somnia
+```
+
+## API Endpoints
+
 - `GET /api/health` - Health check
 - `GET /api/inspect` - Contract analysis
-- `GET /api/social/insights` - Social analysis
-- `GET /api/token/total-supply` - Token data
+- `GET /api/social/insights` - Social sentiment analysis
+- `GET /api/news` - News aggregation
+- `GET /api/token/total-supply` - Token supply information
 
-## 🔒 Security & Benefits
-
-### **Security Features**
-- 🔍 Smart contract auditing & vulnerability detection
-- 📊 Comprehensive risk scoring & assessment
-- ⚡ Real-time monitoring & threat detection
-- 🤖 AI-powered security insights
-- 🌐 Multi-chain security analysis
-
-### **Key Benefits**
-| User Type | Benefits |
-|-----------|----------|
-| **Investors** | Risk assessment, portfolio monitoring, market insights |
-| **Developers** | Contract auditing, cross-chain analysis, API access |
-| **Analysts** | Comprehensive data, AI insights, report generation |
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+ISC
 
-## 🆘 Support
+## Support
 
-- 📚 **Documentation**: Check code comments and inline docs
-- 🐛 **Issues**: Report bugs via [GitHub Issues](https://github.com/your-repo/issues)
-- 💬 **Discussions**: Join community discussions
-- 📱 **Telegram**: [@Social_Alertbot](https://t.me/Social_Alertbot)
-
-## 🚀 Roadmap
-
-- [ ] Advanced AI Models & Enhanced predictions
-- [ ] Additional blockchain support
-- [ ] Native mobile application
-- [ ] API marketplace & third-party integrations
-- [ ] Enterprise-grade institutional features
-- [ ] Direct DeFi protocol analysis
-
----
-
-<div align="center">
-  **Built with ❤️ on ZetaChain**
-  
-  *ZetaGuardian - Your DeFi Security Companion*
-  
-  [![GitHub stars](https://img.shields.io/github/stars/your-repo/Zetaguardian?style=social)](https://github.com/your-repo/Zetaguardian)
-  [![GitHub forks](https://img.shields.io/github/forks/your-repo/Zetaguardian?style=social)](https://github.com/your-repo/Zetaguardian)
-  [![GitHub issues](https://img.shields.io/github/issues/your-repo/Zetaguardian)](https://github.com/your-repo/Zetaguardian/issues)
-</div>
+For support and questions, please open an issue in the repository.

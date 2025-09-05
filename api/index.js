@@ -327,7 +327,7 @@ app.get('/api/social/insights', async (req, res) => {
     if (!apiKey) return res.status(500).json({ error: 'GEMINI_API_KEY not configured' });
 
     const project = (req.query.project || '').toString().trim();
-    const prompt = `You are ZetaGuardian. In 80-120 words, give crisp crypto market insights and alerts.
+    const prompt = `You are SomniaGuardian. In 80-120 words, give crisp crypto market insights and alerts.
     Include:
     - Overall market direction (bullish/bearish/sideways) and BTC/ETH momentum.
     - Notable on‑chain flows or funding if relevant.

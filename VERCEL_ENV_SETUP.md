@@ -1,13 +1,13 @@
 # Vercel Environment Variables Setup Guide
 
-## Required Environment Variables for ZetaGuardian Backend API
+## Required Environment Variables for SomniaGuardian Backend API
 
 To make the backend API work properly on Vercel, you need to set the following environment variables in your Vercel project dashboard.
 
 ### 1. Go to Vercel Dashboard
 1. Visit [vercel.com](https://vercel.com)
 2. Sign in to your account
-3. Select your `Zeta-gaurdian` project
+3. Select your `somnia-guardian` project
 4. Go to **Settings** → **Environment Variables**
 
 ### 2. Add the following Environment Variables:
@@ -111,8 +111,8 @@ The API will use the first available configuration in this order:
 After setting up the environment variables:
 
 1. **Redeploy your project** in Vercel
-2. **Test the health endpoint**: `https://Zeta-gaurdian.vercel.app/api/health`
-3. **Test contract analysis**: `https://Zeta-gaurdian.vercel.app/api/inspect?chain=ethereum&address=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
+2. **Test the health endpoint**: `https://somnia-guardian.vercel.app/api/health`
+3. **Test contract analysis**: `https://somnia-guardian.vercel.app/api/inspect?chain=ethereum&address=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`
 
 ### 6. Troubleshooting
 
@@ -137,4 +137,4 @@ For testing, you can use these free alternatives:
 
 ---
 
-**After setting up these environment variables, your ZetaGuardian backend API will be fully functional!** 🚀
+**After setting up these environment variables, your SomniaGuardian backend API will be fully functional!** 🚀
