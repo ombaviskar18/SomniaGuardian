@@ -15,7 +15,8 @@
     "build": "npm run build --prefix ./frontend",
     "deploy": "npm run build && vercel --prod",
     "deploy:dev": "vercel",
-    "vercel-build": "npm run build --prefix ./frontend"
+    "vercel-build": "npm run build --prefix ./frontend",
+    "mock-deploy": "node -e \"const fs=require(\"fs\");const path=require(\"path\");const MOCK_SST=\"0x1234567890123456789012345678901234567890\";const MOCK_UNIVERSAL=\"0x0987654321098765432109876543210987654321\";const contracts={Universal:MOCK_UNIVERSAL,SST:MOCK_SST,Network:{name:\"Somnia Testnet (Shannon)\",rpcUrl:\"https://dream-rpc.somnia.network/\",chainId:50312,currency:\"STT\",explorer:\"https://somnia-testnet.socialscan.io/\"}};fs.writeFileSync(\"contract-addresses.json\",JSON.stringify(contracts,null,2));console.log(\"✅ Mock deployment completed!\");\""
   },
   "keywords": [],
   "author": "",
