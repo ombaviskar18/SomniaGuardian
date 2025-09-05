@@ -183,6 +183,8 @@ Transaction Monitoring → Real-time Updates → Alerts
    npm run deploy
    ```
 
+   **Note**: The Vercel configuration has been optimized to avoid conflicts between `builds` and `functions` properties.
+
 ### Environment Variables
 
 Set these in Vercel dashboard:
@@ -335,6 +337,10 @@ SomniaGuardian/
 2. **Wrong Network**: Ensure MetaMask is on Somnia Testnet
 3. **Contract Not Found**: Verify contract addresses are correct
 4. **API Errors**: Check environment variables in Vercel
+5. **Vercel Build Errors**: 
+   - `functions` and `builds` conflict: Use the updated `vercel.json` configuration
+   - Build failures: Run `npm run build` locally first
+   - Missing dependencies: Ensure all packages are installed
 
 ### Support
 - **Documentation**: This README
