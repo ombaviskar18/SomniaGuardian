@@ -2,11 +2,6 @@
   "version": 2,
   "buildCommand": "npm run build --prefix ./frontend",
   "outputDirectory": "frontend/dist",
-  "functions": {
-    "api/index.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "routes": [
     {
       "src": "/api/(.*)",

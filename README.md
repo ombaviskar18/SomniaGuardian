@@ -206,6 +206,15 @@ BSCSCAN_API_KEY=your_bscscan_api_key
 SNOWTRACE_API_KEY=your_snowtrace_api_key
 ```
 
+### Vercel Configuration
+
+The project uses a simplified `vercel.json` configuration that:
+- Builds the frontend using Vite
+- Auto-detects API functions in the `api/` directory
+- Routes API calls to `/api/*` endpoints
+- Serves the frontend for all other routes
+- Excludes unnecessary files via `.vercelignore`
+
 ### Contract Deployment
 
 #### Using Remix IDE (Recommended)
@@ -339,6 +348,7 @@ SomniaGuardian/
 4. **API Errors**: Check environment variables in Vercel
 5. **Vercel Build Errors**: 
    - `functions` and `builds` conflict: Use the updated `vercel.json` configuration
+   - Runtime errors: Fixed with simplified Vercel configuration
    - Build failures: Run `npm run build` locally first
    - Missing dependencies: Ensure all packages are installed
 
