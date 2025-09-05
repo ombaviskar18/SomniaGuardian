@@ -291,7 +291,7 @@ export function TokenomicsPage() {
     } catch (err: any) {
       console.error('Error analyzing tokenomics:', err);
       if (err.message && err.message.includes('Payment')) {
-        setErrorMessage('Payment required: Please ensure you have 0.01 aZeta and approve the transaction.');
+        setErrorMessage('Payment required: Please ensure you have 1 SST and approve the transaction.');
       } else if (err.message && err.message.includes('user rejected')) {
         setErrorMessage('Transaction was rejected. Please try again and approve the payment.');
       } else {

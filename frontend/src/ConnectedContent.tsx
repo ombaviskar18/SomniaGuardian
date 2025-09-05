@@ -36,7 +36,7 @@ export function ConnectedContent({
           <p className="content-container-inner-description">
             Make a cross-chain call with a message from{' '}
             {supportedChain?.name || 'a supported network'} to a universal
-            contract on ZetaChain that emits a{' '}
+            contract on Somnia that emits a{' '}
             <span className="highlight">SmartContract</span>
           </p>
         </div>

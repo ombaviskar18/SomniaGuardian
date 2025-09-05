@@ -9,7 +9,7 @@ export interface SupportedChain {
 export const SUPPORTED_CHAINS: SupportedChain[] = [
   {
     explorerUrl: 'https://somnia-testnet.socialscan.io/tx/',
-    name: 'Somnia Testnet (Shannon)',
+    name: 'Somnia Testnet (SST)',
     chainId: 50312,
     icon: '/logos/network-placeholder-logo.svg',
     colorHex: '#5B8DEF',
@@ -62,5 +62,5 @@ export const SUPPORTED_CHAIN_IDS = SUPPORTED_CHAINS.map(
   (chain) => chain.chainId
 );
 
-export const ZetaCHAIN_ATHENS_BLOCKSCOUT_EXPLORER_URL =
-  'https://Zetachain-testnet.blockscout.com/tx/';
+export const SOMNIA_TESTNET_EXPLORER_URL =
+  'https://somnia-testnet.socialscan.io/tx/';

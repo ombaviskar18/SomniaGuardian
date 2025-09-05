@@ -51,7 +51,7 @@ export function ContractAnalysisPage() {
     setErrorMessage('');
 
     try {
-      // Connect to wallet and switch to ZetaChain
+      // Connect to wallet and switch to Somnia
       const connected = await contractService.connect();
       if (!connected) {
         setErrorMessage('Failed to connect wallet. Please ensure MetaMask is installed.');
@@ -386,7 +386,7 @@ export function ContractAnalysisPage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="analysis-hero-description"
               >
-                Comprehensive security evaluation powered by ZetaChain's cross-chain capabilities and advanced AI analysis. 
+                Comprehensive security evaluation powered by Somnia's cross-chain capabilities and advanced AI analysis. 
                 Detect vulnerabilities, honeypots, and malicious patterns before you invest.
               </motion.p>
 

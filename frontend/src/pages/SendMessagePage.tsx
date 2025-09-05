@@ -20,7 +20,7 @@ export function SendMessagePage() {
   const workflowSteps = [
     {
       title: 'Universal Blockchain',
-      description: 'ZetaChain is the first Universal Blockchain to enable native connection across all blockchain ecosystems',
+      description: 'Somnia is the first Universal Blockchain to enable native connection across all blockchain ecosystems',
       icon: Globe,
       details: 'Native access to any blockchain, making crypto as accessible, diverse, and connected as the internet'
     },
@@ -38,7 +38,7 @@ export function SendMessagePage() {
     },
     {
       title: 'Universal Smart Contract',
-      description: 'Deployed natively on ZetaChain, can read and write to any connected chains',
+      description: 'Deployed natively on Somnia, can read and write to any connected chains',
       icon: Zap,
       details: 'Orchestrate complex multi-chain actions and access liquidity across different networks'
     }
@@ -77,7 +77,7 @@ export function SendMessagePage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="message-hero-description"
               >
-                Send secure messages and transfer tokens across any blockchain using ZetaChain's Universal Smart Contracts. Connect Bitcoin, Ethereum, BNB, Polygon, and more with native interoperability.
+                Send secure messages and transfer tokens across any blockchain using Somnia's Universal Smart Contracts. Connect Bitcoin, Ethereum, BNB, Polygon, and more with native interoperability.
               </motion.p>
 
               <motion.div
@@ -207,49 +207,13 @@ export function SendMessagePage() {
         </div>
       </section>
 
-      {/* ZetaChain Workflow Section */}
-      <section className="Zetachain-workflow">
+      {/* Somnia Workflow Section */}
+      <section className="Somnia-workflow">
         <div className="workflow-container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="workflow-header"
-          >
-            <h2 className="workflow-title">What is ZetaChain?</h2>
-            <p className="workflow-subtitle">
-              Our mission is to build a Universal Blockchain with native access to any blockchain, 
-              making crypto as accessible, diverse, and connected as the internet.
-            </p>
-          </motion.div>
+        
 
           <div className="workflow-content">
 
-            <div className="workflow-steps">
-              {workflowSteps.map((step, index) => (
-                <motion.div
-                  key={step.title}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 + index * 0.2 }}
-                  className={`workflow-step ${activeStep === index ? 'active' : ''}`}
-                  onMouseEnter={() => setActiveStep(index)}
-                >
-                  <div className="step-icon-container">
-                    <step.icon className="step-icon" />
-                    <div className="step-number">{index + 1}</div>
-                  </div>
-                  <div className="step-content">
-                    <h4 className="step-title">{step.title}</h4>
-                    <p className="step-description">{step.description}</p>
-                    <p className="step-details">{step.details}</p>
-                  </div>
-                  {index < workflowSteps.length - 1 && (
-                    <ArrowRight className="step-arrow" />
-                  )}
-                </motion.div>
-              ))}
-            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 30 }}

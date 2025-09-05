@@ -28,7 +28,7 @@ export const Header = () => {
     <div className="header-container">
       <div className="header-nav">
         <Link to="/" className="header-logo" onClick={closeMobileMenu}>
-          <img src="/logos/logo.png" alt="ZetaGuardian Logo" className="header-logo-img" />
+          <img src="/logos/logo.png" alt="SomniaGuardian Logo" className="header-logo-img" />
           <span className="title-line-2">SomniaGuardian</span>
         </Link>
         {/* Desktop Navigation */}

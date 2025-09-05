@@ -7,12 +7,12 @@ import { Button } from './components/Button';
 import { IconReceived, IconSpinner } from './components/icons';
 import {
   type SupportedChain,
-  ZetaCHAIN_ATHENS_BLOCKSCOUT_EXPLORER_URL,
+  SOMNIA_TESTNET_EXPLORER_URL,
 } from './constants/chains';
 import { type CrossChainTxResponse } from './types/cctx';
 
 const CCTX_POLLING_URL =
-  'https://Zetachain-athens.blockpi.network/lcd/v1/public/Zeta-chain/crosschain/inboundHashToCctxData';
+  'https://dream-rpc.somnia.network/lcd/v1/public/somnia-chain/crosschain/inboundHashToCctxData';
 
 interface ConfirmedContentProps {
   supportedChain: SupportedChain | undefined;
@@ -29,7 +29,7 @@ export function ConfirmedContent({
   handleSendAnotherMessage,
   stringValue,
 }: ConfirmedContentProps) {
-  const [ZetachainTxHash, setZetachainTxHash] = useState<string | null>(null);
+  const [SomniaTxHash, setSomniaTxHash] = useState<string | null>(null);
   const renderString = useMemo(() => {
     if (stringValue.length > MAX_STRING_LENGTH) {
       return stringValue.slice(0, MAX_STRING_LENGTH) + '...';
@@ -37,9 +37,9 @@ export function ConfirmedContent({
     return stringValue;
   }, [stringValue]);
 
-  // Poll for the ZetaChain transaction status every 15 seconds
+  // Poll for the Somnia transaction status every 15 seconds
   useEffect(() => {
-    if (!connectedChainTxHash || ZetachainTxHash) {
+    if (!connectedChainTxHash || SomniaTxHash) {
       return;
     }
 
@@ -52,7 +52,7 @@ export function ConfirmedContent({
           const data = (await response.json()) as CrossChainTxResponse;
           const txHash = data.CrossChainTxs?.[0]?.outbound_params?.[0]?.hash;
           if (txHash) {
-            setZetachainTxHash(txHash);
+            setSomniaTxHash(txHash);
           }
         }
       } catch (error) {
@@ -66,13 +66,13 @@ export function ConfirmedContent({
     return () => {
       clearInterval(intervalId);
     };
-  }, [connectedChainTxHash, ZetachainTxHash]);
+  }, [connectedChainTxHash, SomniaTxHash]);
 
   return (
     <div className="confirmed-content">
       <IconReceived />
       <h2 className="confirmed-content-title">
-        "{renderString}" {!ZetachainTxHash ? 'in Transit' : 'Received'}
+        "{renderString}" {!SomniaTxHash ? 'in Transit' : 'Received'}
       </h2>
       <div className="confirmed-content-links-container">
         {supportedChain && (
@@ -93,17 +93,17 @@ export function ConfirmedContent({
         )}
         {connectedChainTxHash && (
           <div className="confirmed-content-link-chain">
-            {!ZetachainTxHash && <IconSpinner />}
+            {!SomniaTxHash && <IconSpinner />}
             <a
-              href={`${ZetaCHAIN_ATHENS_BLOCKSCOUT_EXPLORER_URL}${ZetachainTxHash}`}
+              href={`${SOMNIA_TESTNET_EXPLORER_URL}${SomniaTxHash}`}
               target="_blank"
               rel="noreferrer noopener"
               className={clsx('confirmed-content-link', {
-                'confirmed-content-link-enabled': ZetachainTxHash,
-                'confirmed-content-link-disabled': !ZetachainTxHash,
+                'confirmed-content-link-enabled': SomniaTxHash,
+                'confirmed-content-link-disabled': !SomniaTxHash,
               })}
             >
-              View on ZetaChain
+              View on Somnia
             </a>
           </div>
         )}
@@ -111,10 +111,10 @@ export function ConfirmedContent({
       <Button
         type="button"
         variant="thin"
-        disabled={!connectedChainTxHash || !ZetachainTxHash}
+        disabled={!connectedChainTxHash || !SomniaTxHash}
         onClick={() => {
           handleSendAnotherMessage();
-          setZetachainTxHash(null);
+          setSomniaTxHash(null);
         }}
       >
         Send Another
