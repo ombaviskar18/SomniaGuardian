@@ -1,0 +1,15 @@
+{
+  "ContractAnalysis": "0xdb5fC412a5515033265Dc9e8d383f9C2b551c747",
+  "Tokenomics": "0xdAeB7bAc9606598f14F4382Fc3E95278ed2317db",
+  "SocialAnalysis": "0x74BAd0e70daaD1D12Fd97170aE6D65bDaE77a982",
+  "Monitoring": "0x0CeA3f0aD00C20F1824373635474c4d72a5E6B82",
+  "Gateway": "0x0000000000000000000000000000000000000000",
+  "SST": "0x0000000000000000000000000000000000000000",
+  "Network": {
+    "name": "Somnia Testnet (Shannon)",
+    "rpcUrl": "https://dream-rpc.somnia.network/",
+    "chainId": 50312,
+    "currency": "STT",
+    "explorer": "https://somnia-testnet.socialscan.io/"
+  }
+}
