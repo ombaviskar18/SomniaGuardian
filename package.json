@@ -16,7 +16,9 @@
     "deploy": "npm run build && vercel --prod",
     "deploy:dev": "vercel",
     "vercel-build": "npm run build --prefix ./frontend",
-    "mock-deploy": "node -e \"const fs=require(\"fs\");const path=require(\"path\");const MOCK_SST=\"0x1234567890123456789012345678901234567890\";const MOCK_UNIVERSAL=\"0x0987654321098765432109876543210987654321\";const contracts={Universal:MOCK_UNIVERSAL,SST:MOCK_SST,Network:{name:\"Somnia Testnet (Shannon)\",rpcUrl:\"https://dream-rpc.somnia.network/\",chainId:50312,currency:\"STT\",explorer:\"https://somnia-testnet.socialscan.io/\"}};fs.writeFileSync(\"contract-addresses.json\",JSON.stringify(contracts,null,2));console.log(\"✅ Mock deployment completed!\");\""
+    "mock-deploy": "node -e \"const fs=require(\"fs\");const path=require(\"path\");const MOCK_SST=\"0x1234567890123456789012345678901234567890\";const MOCK_UNIVERSAL=\"0x0987654321098765432109876543210987654321\";const contracts={Universal:MOCK_UNIVERSAL,SST:MOCK_SST,Network:{name:\"Somnia Testnet (Shannon)\",rpcUrl:\"https://dream-rpc.somnia.network/\",chainId:50312,currency:\"STT\",explorer:\"https://somnia-testnet.socialscan.io/\"}};fs.writeFileSync(\"contract-addresses.json\",JSON.stringify(contracts,null,2));console.log(\"✅ Mock deployment completed!\");\"",
+    "update-sst-address": "node -e \"const fs=require(\"fs\");const path=require(\"path\");const newAddress=process.argv[2];if(!newAddress)throw new Error(\"Please provide SST contract address as argument\");const contracts=JSON.parse(fs.readFileSync(\"contract-addresses.json\",\"utf8\"));contracts.SST=newAddress;fs.writeFileSync(\"contract-addresses.json\",JSON.stringify(contracts,null,2));const frontendConstants=\"export const HELLO_UNIVERSAL_CONTRACT_ADDRESS =\\n  \"0x0000000000000000000000000000000000000000\";\\n\\nexport const SST_TOKEN_ADDRESS =\\n  \"\"+newAddress+\"\";\\n\";fs.writeFileSync(\"frontend/src/constants/contracts.ts\",frontendConstants);console.log(\"✅ Updated SST address to:\",newAddress);\"",
+    "check-deployment": "node scripts/check-deployment.js"
   },
   "keywords": [],
   "author": "",
@@ -71,7 +73,6 @@
     "@openzeppelin/contracts": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "node-fetch": "^3.3.2",
-    "Zetachain": "^6.2.0"
+    "node-fetch": "^3.3.2"
   }
 }

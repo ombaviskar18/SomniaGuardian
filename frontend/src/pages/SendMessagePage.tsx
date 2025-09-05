@@ -1,15 +1,14 @@
-import { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ConnectedContent } from '../ConnectedContent';
 import { SUPPORTED_CHAINS } from '../constants/chains';
 import { DisconnectedContent } from '../DisconnectedContent';
 import { useWallet } from '../hooks/useWallet';
-import { MessageSquare, Zap, Shield, Globe, ArrowRight, Network } from 'lucide-react';
+import { MessageSquare, Zap, Shield, Globe, Network } from 'lucide-react';
 import './SendMessagePage.css';
 
 export function SendMessagePage() {
   const { account, selectedProvider, decimalChainId } = useWallet();
-  const [activeStep, setActiveStep] = useState(0);
 
   const supportedChain = SUPPORTED_CHAINS.find(
     (chain) => chain.chainId === decimalChainId
@@ -17,32 +16,6 @@ export function SendMessagePage() {
 
 
 
-  const workflowSteps = [
-    {
-      title: 'Universal Blockchain',
-      description: 'Somnia is the first Universal Blockchain to enable native connection across all blockchain ecosystems',
-      icon: Globe,
-      details: 'Native access to any blockchain, making crypto as accessible, diverse, and connected as the internet'
-    },
-    {
-      title: 'Universal PoS',
-      description: 'Proof of Stake system built on Cosmos SDK and Comet BFT with 5-second finality',
-      icon: Shield,
-      details: 'Core Validators and Observer-Signer Validators ensure network and cross-chain security'
-    },
-    {
-      title: 'Universal EVM',
-      description: 'Execution environment callable from any chain for managing native assets and contracts',
-      icon: Network,
-      details: 'Create applications with built-in cross-chain capabilities within a familiar EVM environment'
-    },
-    {
-      title: 'Universal Smart Contract',
-      description: 'Deployed natively on Somnia, can read and write to any connected chains',
-      icon: Zap,
-      details: 'Orchestrate complex multi-chain actions and access liquidity across different networks'
-    }
-  ];
 
   return (
     <div className="send-message-page">
