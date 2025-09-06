@@ -1,6 +1,5 @@
 import './MessageFlowCard.css';
 
-import { evmCall } from '@Zetachain/toolkit/chains/evm';
 import { ethers, ZeroAddress } from 'ethers';
 import { useEffect, useRef, useState } from 'react';
 
@@ -40,37 +39,29 @@ export function MessageFlowCard({
         (await ethersProvider.getSigner()) as ethers.AbstractSigner;
 
       const helloUniversalContractAddress =
-        '0x61a184EB30D29eD0395d1ADF38CC7d2F966c4A82';
+        '0x0987654321098765432109876543210987654321';
 
-      const evmCallParams = {
-        receiver: helloUniversalContractAddress,
-        types: ['string'],
-        values: [stringValue],
-        revertOptions: {
-          callOnRevert: false,
-          revertAddress: ZeroAddress,
-          revertMessage: '',
-          abortAddress: ZeroAddress,
-          onRevertGasLimit: 1000000,
-        },
-      };
-
-      const evmCallOptions = {
-        signer,
-        txOptions: {
-          gasLimit: 1000000,
-        },
-      };
+      // Simple contract call to Universal contract
+      const contract = new ethers.Contract(
+        helloUniversalContractAddress,
+        [
+          'function sendMessage(string memory message) external',
+          'function getMessage() external view returns (string memory)'
+        ],
+        signer
+      );
 
       setIsUserSigningTx(true);
 
-      const result = await evmCall(evmCallParams, evmCallOptions);
+      const tx = await contract.sendMessage(stringValue, {
+        gasLimit: 1000000,
+      });
 
       setIsTxReceiptLoading(true);
 
-      await result.wait();
+      await tx.wait();
 
-      setConnectedChainTxHash(result.hash);
+      setConnectedChainTxHash(tx.hash);
     } catch (error) {
       console.error(error);
     } finally {

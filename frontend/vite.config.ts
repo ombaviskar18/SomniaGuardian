@@ -6,7 +6,6 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: ['@Zetachain/toolkit/chains/evm'],
     force: true,
   },
   resolve: {
@@ -18,7 +17,7 @@ export default defineConfig({
   },
   build: {
     commonjsOptions: {
-      include: [/node_modules/, /toolkit/],
+      include: [/node_modules/],
     },
     outDir: 'dist',
     rollupOptions: {

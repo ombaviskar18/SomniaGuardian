@@ -64,12 +64,6 @@
   },
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72",
   "dependencies": {
-    "@coral-xyz/anchor": "0.30.0",
-    "@solana-developers/helpers": "^2.4.0",
-    "@solana/spl-memo": "^0.2.5",
-    "@solana/web3.js": "^1.95.8",
-    "@Zetachain/protocol-contracts": "13.0.0",
-    "@Zetachain/toolkit": "^16.0.0",
     "@openzeppelin/contracts": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
