@@ -64,13 +64,6 @@ export class ContractService {
   async requestContractAnalysis(contractAddress: string) {
     if (!this.signer) throw new Error("Wallet not connected");
     
-    // Check if we're using mock addresses
-    if (CONTRACT_ADDRESSES.ContractAnalysis === "0xdb5fC412a5515033265Dc9e8d383f9C2b551c747") {
-      console.log('Using mock contract address - simulating payment for demo');
-      // Simulate a successful transaction for demo mode
-      return { hash: '0x' + Math.random().toString(16).substr(2, 64) };
-    }
-    
     const contract = new ethers.Contract(
       CONTRACT_ADDRESSES.ContractAnalysis,
       CONTRACT_ABI,
@@ -84,14 +77,6 @@ export class ContractService {
 
   async requestTokenomicsAnalysis(tokenAddress: string) {
     if (!this.signer) throw new Error("Wallet not connected");
-    
-    // Check if we're using mock addresses
-    if (CONTRACT_ADDRESSES.Tokenomics === "0xdAeB7bAc9606598f14F4382Fc3E95278ed2317db") {
-      console.log('Using mock contract address - simulating payment for demo');
-      // Simulate a successful transaction for demo mode
-      return { hash: '0x' + Math.random().toString(16).substr(2, 64) };
-    }
-    
     const contract = new ethers.Contract(
       CONTRACT_ADDRESSES.Tokenomics,
       CONTRACT_ABI,
@@ -106,13 +91,6 @@ export class ContractService {
   async requestSocialAnalysis(projectName: string) {
     if (!this.signer) throw new Error("Wallet not connected");
     
-    // Check if we're using mock addresses
-    if (CONTRACT_ADDRESSES.SocialAnalysis === "0x74BAd0e70daaD1D12Fd97170aE6D65bDaE77a982") {
-      console.log('Using mock contract address - simulating payment for demo');
-      // Simulate a successful transaction for demo mode
-      return { hash: '0x' + Math.random().toString(16).substr(2, 64) };
-    }
-    
     const contract = new ethers.Contract(
       CONTRACT_ADDRESSES.SocialAnalysis,
       CONTRACT_ABI,
@@ -126,13 +104,6 @@ export class ContractService {
 
   async requestMonitoring(targetAddress: string) {
     if (!this.signer) throw new Error("Wallet not connected");
-    
-    // Check if we're using mock addresses
-    if (CONTRACT_ADDRESSES.Monitoring === "0x0CeA3f0aD00C20F1824373635474c4d72a5E6B82") {
-      console.log('Using mock contract address - simulating payment for demo');
-      // Simulate a successful transaction for demo mode
-      return { hash: '0x' + Math.random().toString(16).substr(2, 64) };
-    }
     
     const contract = new ethers.Contract(
       CONTRACT_ADDRESSES.Monitoring,
@@ -181,28 +152,15 @@ export class ContractService {
 
   async hasAtLeastOneSST(): Promise<boolean> {
     if (!this.signer) throw new Error("Wallet not connected");
-    
-    // Check if we're using mock addresses
-    if (SST_TOKEN_ADDRESS === '0x1234567890123456789012345678901234567890') {
-      console.log('Using mock SST address - skipping balance check for demo');
-      return true; // Allow demo mode
-    }
-    
-    try {
-      const user = await this.signer.getAddress();
-      const erc20Abi = ["function balanceOf(address) view returns (uint256)", "function decimals() view returns (uint8)"];
-      const token = new ethers.Contract(SST_TOKEN_ADDRESS, erc20Abi, this.provider || this.signer);
-      const [balance, decimals] = await Promise.all([
-        token.balanceOf(user) as Promise<bigint>,
-        token.decimals() as Promise<number>,
-      ]);
-      const required = ethers.parseUnits("1", decimals);
-      return balance >= required;
-    } catch (error) {
-      console.error('Error checking SST balance:', error);
-      // In demo mode, allow access even if balance check fails
-      return true;
-    }
+    const user = await this.signer.getAddress();
+    const erc20Abi = ["function balanceOf(address) view returns (uint256)", "function decimals() view returns (uint8)"];
+    const token = new ethers.Contract(SST_TOKEN_ADDRESS, erc20Abi, this.provider || this.signer);
+    const [balance, decimals] = await Promise.all([
+      token.balanceOf(user) as Promise<bigint>,
+      token.decimals() as Promise<number>,
+    ]);
+    const required = ethers.parseUnits("1", decimals);
+    return balance >= required;
   }
 }
 

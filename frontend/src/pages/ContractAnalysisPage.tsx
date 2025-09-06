@@ -79,7 +79,7 @@ export function ContractAnalysisPage() {
 
       // After successful payment, proceed with analysis
       const params = new URLSearchParams({ chain: 'ethereum', address: addr });
-              const res = await fetch(`/api/inspect?${params.toString()}`);
+      const res = await fetch(`/api/contract-analysis?${params.toString()}`);
       const data = await res.json();
       if (!res.ok || (data as any).error) {
         const msg = (data && (data as any).error) ? String((data as any).error) : 'Unexpected error';

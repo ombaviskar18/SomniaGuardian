@@ -431,5 +431,164 @@ app.get('/api/news', async (req, res) => {
   }
 });
 
+// Contract Analysis endpoint
+app.get('/api/contract-analysis', async (req, res) => {
+  try {
+    const chain = (req.query.chain || 'ethereum').toString();
+    const addressRaw = (req.query.address || '').toString().trim();
+    
+    // Strict validation: must be 42-chars 0x... and checksum-valid
+    if (!/^0x[a-fA-F0-9]{40}$/.test(addressRaw)) {
+      return res.status(400).json({ error: 'Invalid address format' });
+    }
+    const address = normalizeAddress(addressRaw);
+    if (!address) return res.status(400).json({ error: 'Invalid address' });
+
+    console.log(`[contract-analysis] chain=${chain} address=${address}`);
+
+    // Use the same logic as inspect endpoint
+    const cfg = CHAIN_CONFIG[chain];
+    if (!cfg) {
+      return res.status(400).json({ error: `Chain configuration not found: ${chain}` });
+    }
+
+    if (!cfg.rpc) {
+      return res.status(500).json({ 
+        error: `RPC URL not configured for ${chain}. Please set ${chain.toUpperCase()}_RPC_URL environment variable in Vercel.`,
+        setup_required: true,
+        missing_config: 'rpc_url'
+      });
+    }
+
+    if (!cfg.key) {
+      return res.status(500).json({ 
+        error: `API key not configured for ${chain}. Please set ${chain.toUpperCase()}SCAN_API_KEY environment variable in Vercel.`,
+        setup_required: true,
+        missing_config: 'api_key'
+      });
+    }
+
+    // 1) Try ABI from explorer
+    let abi = await fetchAbiFromExplorer(chain, address);
+    let analysisSource = 'explorer';
+
+    // 2) Fallback: check if contract exists on RPC (code presence)
+    let hasCode = null;
+    if (!abi) {
+      const code = await fetchCodeViaRpc(chain, address);
+      hasCode = !!code;
+      analysisSource = 'rpc';
+    }
+
+    // Basic analysis from ABI only
+    let analysis = { riskScore: 50, suspicious: [], securityChecks: {}, recommendations: [] };
+    if (abi) analysis = analyzeAbi(abi);
+    // Liquidity enhancement
+    if (abi) {
+      const liq = await analyzeLiquidity(chain, address, abi);
+      analysis.securityChecks = {
+        ...analysis.securityChecks,
+        liquidity: { status: liq.status, score: liq.score },
+      };
+    }
+    if (!abi && hasCode === false) return res.status(404).json({ error: 'No contract bytecode found at address' });
+
+    const result = {
+      address,
+      chain,
+      source: analysisSource,
+      riskScore: analysis.riskScore,
+      vulnerabilities: analysis.suspicious,
+      recommendations: analysis.recommendations,
+      securityChecks: analysis.securityChecks,
+      timestamp: new Date().toISOString(),
+      meta: {
+        abiFound: !!abi,
+        hasCode,
+        explorerKeyPresent: !!(CHAIN_CONFIG[chain] && CHAIN_CONFIG[chain].key),
+        rpcPresent: !!(CHAIN_CONFIG[chain] && CHAIN_CONFIG[chain].rpc),
+      },
+    };
+
+    console.log(`[contract-analysis] result meta`, result.meta);
+    return res.json(result);
+  } catch (e) {
+    return res.status(500).json({ error: 'Internal error', details: String(e && e.message ? e.message : e) });
+  }
+});
+
+// Monitoring endpoint
+app.get('/api/monitoring/prediction', async (req, res) => {
+  try {
+    const apiKey = env('GEMINI_API_KEY');
+    if (!apiKey) return res.status(500).json({ error: 'GEMINI_API_KEY not configured' });
+
+    const token = (req.query.token || '').toString().trim();
+    const price = parseFloat(req.query.price || '0');
+    const change24h = parseFloat(req.query.change24h || '0');
+    const volume = parseFloat(req.query.volume || '0');
+    const marketCap = parseFloat(req.query.marketCap || '0');
+    const riskLevel = (req.query.riskLevel || 'medium').toString().toLowerCase();
+
+    const prompt = `You are SomniaGuardian AI. Analyze this token data and provide a trading recommendation:
+
+Token: ${token}
+Current Price: $${price}
+24h Change: ${change24h}%
+24h Volume: $${volume.toLocaleString()}
+Market Cap: $${marketCap.toLocaleString()}
+Risk Level: ${riskLevel}
+
+Provide a JSON response with:
+{
+  "recommendation": "BUY|SELL|HOLD",
+  "confidence": 65-95,
+  "reasoning": "Detailed analysis in 2-3 sentences",
+  "priceTarget": target_price_number,
+  "timeframe": "1-7 days|1-2 weeks|1 month",
+  "riskLevel": "LOW|MEDIUM|HIGH",
+  "keyFactors": ["factor1", "factor2", "factor3", "factor4"]
+}
+
+Base your analysis on:
+- Price momentum and volume
+- Market cap and liquidity
+- Risk assessment
+- Technical indicators
+- Market sentiment`;
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const { data } = await axios.post(url, {
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.7, maxOutputTokens: 512 },
+    }, { timeout: 20000 });
+
+    const text = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text
+      ? data.candidates[0].content.parts[0].text
+      : '';
+
+    try {
+      // Try to parse JSON from the response
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        const prediction = JSON.parse(jsonMatch[0]);
+        return res.json({ prediction });
+      }
+    } catch (parseError) {
+      console.error('Failed to parse AI response as JSON:', parseError);
+    }
+
+    // Fallback: return error if JSON parsing fails
+    return res.status(500).json({ 
+      error: 'Failed to generate prediction', 
+      details: 'AI response could not be parsed as valid JSON',
+      rawResponse: text
+    });
+
+  } catch (e) {
+    return res.status(500).json({ error: 'Failed to generate prediction', details: String(e && e.message ? e.message : e) });
+  }
+});
+
 // Vercel serverless function export
 module.exports = app;
