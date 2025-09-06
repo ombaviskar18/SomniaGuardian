@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "vercel-build": "tsc && vite build && echo 'Build completed successfully'"
+    "vercel-build": "tsc && vite build"
   },
   "dependencies": {
     "chart.js": "^4.5.0",
